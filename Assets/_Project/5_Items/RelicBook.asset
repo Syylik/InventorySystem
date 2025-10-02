@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e42cef6c747dd08fbb3381a0e5cc2fa5, type: 3}
+  m_Name: RelicBook
+  m_EditorClassIdentifier: 
+  itemName: Relic Book Of Crime
+  description: I need to transfer this to other city
+  icon: {fileID: -215821589, guid: 902f8700bf3bfe3c49e444044c9add59, type: 3}
+  isStackable: 0
+  itemType: 0
