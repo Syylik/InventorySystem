@@ -11,7 +11,7 @@ public class Bootstrap : MonoBehaviour
 
     public void Awake()
     {
-        _inventory.Init();
+        _inventory = new Inventory();
         _inventoryView.Init(_inventory);
 
         Debug.Log("Init Finished. Slots = " + _inventory.Capacity);

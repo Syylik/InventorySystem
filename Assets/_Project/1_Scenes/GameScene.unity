@@ -898,7 +898,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f206f7a5aef48ad25b2f466bd30d8bf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inventory: {fileID: 2001237143}
   _slotPrefab: {fileID: -2419791943409105321, guid: 0aba82330a53dbbb0a8ebd0f0fd50309, type: 3}
   _slotsParent: {fileID: 1558867450}
   _inventoryPanel: {fileID: 1436562676}
@@ -1120,7 +1119,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2001237144}
-  - component: {fileID: 2001237143}
   - component: {fileID: 2001237145}
   m_Layer: 0
   m_Name: ScriptHandler
@@ -1129,19 +1127,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2001237143
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2001237142}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0bb8721749515f904b67ca8d6bfedfc7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _capacity: 30
 --- !u!4 &2001237144
 Transform:
   m_ObjectHideFlags: 0
@@ -1169,7 +1154,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 033814c8e90db78efb7513e9ccea8be1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inventory: {fileID: 2001237143}
   _inventoryView: {fileID: 1436562679}
   _startupItems:
   - {fileID: 11400000, guid: ba36749fb49c4a39d9cd7e00e42abe37, type: 2}

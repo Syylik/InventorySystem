@@ -4,17 +4,18 @@ using UnityEngine;
 
 namespace Game.Inventory
 {
-    public class Inventory : MonoBehaviour
+    public class Inventory
     {
-        [SerializeField] private int _capacity = 30;
+        private int _capacity = 30;
         public int Capacity => _capacity;
         private InventoryItem[] _items;
         public IReadOnlyList<InventoryItem> Items => _items;
 
         public event Action<int> OnSlotChanged;
 
-        public void Init()
+        public Inventory(int capacity = 30)
         {
+            _capacity = capacity;
             _items = new InventoryItem[_capacity];
         }
 

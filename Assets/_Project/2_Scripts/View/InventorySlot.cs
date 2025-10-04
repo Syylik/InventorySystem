@@ -58,7 +58,6 @@ namespace Game.Inventory
         public void OnDrag(PointerEventData eventData)
         {
             if (_currentItem == null) return;
-            // _icon.rectTransform.position = eventData.position;
             if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
                 _temporaryParent as RectTransform,
                 eventData.position,
@@ -81,8 +80,8 @@ namespace Game.Inventory
         public void OnDrop(PointerEventData eventData)
         {
             var droppedSlot = eventData.pointerDrag?.GetComponent<InventorySlot>();
-            if (droppedSlot != null && droppedSlot != this)
-                _inventoryView.OnSwap(droppedSlot.index, index);
+            Debug.Log($"{index} -> {droppedSlot.index}");
+            if (droppedSlot != null && droppedSlot != this) _inventoryView.OnSwap(droppedSlot.index, index);
         }
 
         // Use on click
