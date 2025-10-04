@@ -19,6 +19,12 @@ namespace Game.Inventory
             _items = new InventoryItem[_capacity];
         }
 
+        public Inventory(InventoryItem[] items)
+        {
+            _items = new InventoryItem[items.Length];
+            items.CopyTo(_items, 0);
+        }
+
         public bool TryAddItem(ItemData itemData, int amount = 1)
         {
             if (amount <= 0) return false;
@@ -50,19 +56,47 @@ namespace Game.Inventory
 
             return false;
         }
+        public bool TryAddItem(ItemData itemData, int index, int amount = 1)
+        {
+            if (amount <= 0) return false;
+            if (_items[index] != null)
+            {
+                if (itemData.isStackable)
+                {
+                    _items[index].amount += amount;
+                    OnSlotChanged?.Invoke(index);
+                    return true;
+                }
+                else return false;
+            }
 
-        public void RemoveItem(int index, int amount)
+            _items[index] = new InventoryItem(itemData, amount);
+            OnSlotChanged?.Invoke(index);
+            return true;
+        }
+
+        public void RemoveItem(int index, int amount = 1)
         {
             if (_items[index] == null) return;
             _items[index].amount -= amount;
             if (_items[index].amount <= 0) _items[index] = null;
+
+            OnSlotChanged?.Invoke(index);
         }
 
         public void SwapItems(int fromIndex, int toIndex)
         {
-            var temp = _items[fromIndex];
-            _items[fromIndex] = _items[toIndex];
-            _items[toIndex] = temp;
+            if (_items[toIndex] != null && _items[fromIndex].data == _items[toIndex].data && _items[fromIndex].data.isStackable)
+            {
+                _items[toIndex].amount += _items[fromIndex].amount;
+                _items[fromIndex] = null;
+            }
+            else
+            {
+                var temp = _items[toIndex];
+                _items[toIndex] = _items[fromIndex];
+                _items[fromIndex] = temp;
+            }
 
             OnSlotChanged?.Invoke(fromIndex);
             OnSlotChanged?.Invoke(toIndex);
@@ -73,8 +107,8 @@ namespace Game.Inventory
             if (_items[index] == null) return;
             Debug.Log(_items[index].data.name + " Used");
             // _items[index].Use();
-            RemoveItem(index, 1);
-            OnSlotChanged?.Invoke(index);
+            RemoveItem(index);
+            // OnSlotChanged?.Invoke(index);
         }
     }
 }

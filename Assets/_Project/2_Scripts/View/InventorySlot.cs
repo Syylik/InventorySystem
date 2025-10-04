@@ -5,7 +5,7 @@ using TMPro;
 
 namespace Game.Inventory
 {
-    public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
+    public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] private Image _icon;
         [SerializeField] private TMP_Text _amountText;
@@ -16,15 +16,12 @@ namespace Game.Inventory
         private Transform _originalParent;
         private Transform _temporaryParent;
 
-        private RectTransform _rectTransform;
-
-        private void Awake() => _rectTransform = GetComponent<RectTransform>();
-
         public void Init(int index, InventoryView ui, Transform inventoryPanel)
         {
             this.index = index;
             _inventoryView = ui;
             _temporaryParent = inventoryPanel;
+            _originalParent = transform;
             Clear();
         }
 
@@ -34,6 +31,7 @@ namespace Game.Inventory
             _icon.sprite = item.data.icon;
             _icon.enabled = true;
             _amountText.text = item.data.isStackable && item.amount > 1 ? item.amount.ToString() : "";
+            ResetPosition();
         }
 
         public void Clear()
@@ -49,9 +47,10 @@ namespace Game.Inventory
         {
             if (_currentItem == null) return;
 
-            _originalParent = _icon.transform.parent;
+            _originalParent = transform;
             _icon.transform.SetParent(_temporaryParent.transform);
             _icon.raycastTarget = false;
+            eventData.pointerDrag = gameObject;
             // transform.SetAsLastSibling();
         }
 
@@ -64,14 +63,14 @@ namespace Game.Inventory
                 eventData.pressEventCamera,
                 out Vector2 localPoint))
             {
-                _icon.rectTransform.anchoredPosition = localPoint;
+                _icon.rectTransform.localPosition = localPoint;
             }
         }
 
-        public void OnEndDrag(PointerEventData eventData)
-        {
-            if (_currentItem == null) return;
+        public void OnEndDrag(PointerEventData eventData) => ResetPosition();
 
+        private void ResetPosition()
+        {
             _icon.transform.SetParent(_originalParent);
             _icon.transform.localPosition = Vector3.zero;
             _icon.raycastTarget = true;
@@ -80,14 +79,15 @@ namespace Game.Inventory
         public void OnDrop(PointerEventData eventData)
         {
             var droppedSlot = eventData.pointerDrag?.GetComponent<InventorySlot>();
-            Debug.Log($"{index} -> {droppedSlot.index}");
             if (droppedSlot != null && droppedSlot != this) _inventoryView.OnSwap(droppedSlot.index, index);
         }
 
         // Use on click
         public void OnPointerClick(PointerEventData eventData)
         {
-            if (eventData.clickCount == 2 && _currentItem != null) _inventoryView.OnUse(index);
+            
+            if (eventData.button == PointerEventData.InputButton.Left && eventData.clickCount == 2 && _currentItem != null) _inventoryView.OnUse(index);
+            if (eventData.button == PointerEventData.InputButton.Right && _currentItem != null) _inventoryView.OnDrop(index);
         }
 
         // Tooltip on hover

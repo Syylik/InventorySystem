@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Levitation Feather
   description: Stranger give it to me
-  icon: {fileID: -215821589, guid: 902f8700bf3bfe3c49e444044c9add59, type: 3}
+  icon: {fileID: 722821188, guid: 902f8700bf3bfe3c49e444044c9add59, type: 3}
   isStackable: 0
   itemType: 0

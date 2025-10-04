@@ -37,12 +37,13 @@ namespace Game.Inventory
             else _slots[index].Clear();
         }
 
-        private void RefreshAll()
+        public void RefreshAll()
         {
             for (int i = 0; i < _slots.Length; i++) OnSlotChanged(i);
         }
 
         public void OnSwap(int from, int to) => _inventory.SwapItems(from, to);
         public void OnUse(int index) => _inventory.UseItem(index);
+        public void OnDrop(int index) => _inventory.RemoveItem(index);
     }
 }
